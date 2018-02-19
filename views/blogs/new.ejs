@@ -1,0 +1,27 @@
+<% include ../partials/header %>
+
+<h1>Write a new blog</h1>
+
+<form action="/blogs" method="POST">
+	
+	<label>Blog title</label>
+	<input type="text" name="blog[title]" placeholder="Title of your blog">
+	<p></p>
+	
+	<label>Description</label>
+	<input type="text" name="blog[description]" placeholder="Quick teaser for your blog content">
+	<p></p>
+
+	<label>Image</label>
+	<input type="text" name="blog[image]" placeholder="Paste image URL here">
+	<p></p>
+
+	<label>Content</label>
+	<textarea name="blog[content]" placeholder="Write your blog here"></textarea>
+	<p></p>
+	
+	<button>Post your blog!</button>
+
+</form>
+
+<% include ../partials/footer %>

@@ -1,0 +1,27 @@
+<% include ../partials/header %>
+
+<h1>Edit your blog</h1>
+
+<form action="/blogs/<%= blog._id %>?_method=PUT" method="POST">
+	
+	<label>Blog title</label>
+	<input type="text" name="blog[title]" value="<%= blog.title %>" placeholder="Title of your blog">
+	<p></p>
+	
+	<label>Description</label>
+	<input type="text" name="blog[description]" value="<%= blog.description %>" placeholder="Quick teaser for your blog content">
+	<p></p>
+
+	<label>Image</label>
+	<input type="text" name="blog[image]" value="<%= blog.image %>" placeholder="Paste image URL here">
+	<p></p>
+
+	<label>Content</label>
+	<textarea name="blog[content]" placeholder="Write your blog here"><%= blog.content %></textarea>
+	<p></p>
+	
+	<button>Update your blog!</button>
+
+</form>
+
+<% include ../partials/footer %>

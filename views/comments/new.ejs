@@ -1,0 +1,15 @@
+<% include ../partials/header %>
+
+<h2>Write a comment about <em><%= blog.title %></em></h2>
+
+<form action="/blogs/<%= blog._id %>/comments" method="POST">
+
+	<label>Content</label>
+	<textarea name="comment[text]" placeholder="Write your comment here"></textarea>
+	<p></p>
+	
+	<button>Post your blog!</button>
+
+</form>
+
+<% include ../partials/footer %>

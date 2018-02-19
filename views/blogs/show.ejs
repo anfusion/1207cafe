@@ -1,0 +1,36 @@
+<% include ../partials/header %>
+
+	<div style="margin: 10px">
+		<h3><%=blog.title%></h3>
+		<p><%= blog.description %></p>
+		<img style="max-width: 550px; float:left" src="<%= blog.image %>"><br>
+		<p><%=blog.content%></p>
+		<p><em>Written by: <%=blog.author.username%></em></p>
+		<p>
+			<a href="/blogs">Return to all blogs</a>
+		</p>
+		<% blog.comments.forEach(function(comment) {%>
+			<div>
+				<p style="display:inline"><strong><%=comment.author.username%></strong> - "<%=comment.text%>"</p>
+				<% if (currentUser && comment.author.id.equals(currentUser._id)){%>
+					<a style="display:inline" href="/blogs/<%=blog._id%>/comments/<%=comment._id%>/edit"><button>Edit</button></a>
+					<form style="display:inline" action="/blogs/<%=blog._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
+						<button>Delete</button>
+					</form>
+				<% } %>	
+			</div>
+		<% }); %>	
+	</div>
+
+	<a href="/blogs/<%=blog._id%>/comments/new"><button>Write Comment</button></a>
+	<br>
+		<% if (currentUser && blog.author.id.equals(currentUser._id)){%>
+			<a href="/blogs/<%=blog._id%>/edit"><button>Edit</button></a>
+			<form action="/blogs/<%= blog._id %>?_method=DELETE" method="POST">
+				<button>Delete</button>
+			</form>
+		<% } %>
+	
+<% include ../partials/footer %>
+
+ 

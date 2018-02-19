@@ -1,0 +1,20 @@
+
+<% include ../partials/header %>
+
+<h2>Edit comments for <i><%= blog.title%></i></h2>
+
+
+
+<form action="/blogs/<%= blog._id %>/comments/<%= comment._id %>?_method=PUT" method="POST">
+
+	<label>Content</label>
+	<textarea name="comment[text]" placeholder="Write your comment here"><%= comment.text %></textarea>
+	<p></p>
+	
+	<button>Post your blog!</button>
+
+</form>
+
+<% include ../partials/footer %>
+
+

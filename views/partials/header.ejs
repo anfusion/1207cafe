@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>1207 cafe</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link rel="stylesheet" type="text/css" href="/stylesheets/app.css">
+		        <link href="/images">
+        
+    </head>
+    
+    <body>
+
+    	<nav class="navigation">
+			<a href="/" class="nav_items nav_border"><img src="/images/image_1207logobig_button.png"></a>
+			<a href="/blogs" class="nav_items nav_border"><p>Blog</p></a>
+			<!-- if no user -->
+			<% if(!currentUser){ %>
+			<a href="/login" class="nav_items nav_border"><p>Log in</p></a>
+			<a href="/register" class="nav_items"><p>Sign up</p></a>
+			<!-- if  user -->
+			<% } else { %>
+			<a href="#" class="nav_items"><p>Signed in as <%=currentUser.username%></p></a>
+			<a href="/logout" class="nav_items"><p>Log out</p></a>
+			<% } %>
+
+		</nav>
+
+		<% if (error && error.length > 0) { %>
+		<h1 style="color:red; margin-left: 10px"><%= error %></h1>
+		<% } %>
+
+		<% if (success && success.length > 0) { %>
+		<h1 style="color:blue; margin-left: 10px"><%= success %></h1>
+		<% } %>
+
+		
+
+	    
