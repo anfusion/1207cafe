@@ -10,15 +10,19 @@ var express 		= require("express"),
 
 var	Blog 			= require("./models/blog"),
 	Comment 		= require("./models/comment"),
-	User 			= require("./models/user"),
-	seedDB			= require("./seeds");
+	User 			= require("./models/user");
+//	seedDB			= require("./seeds");
 
 
 var	blogRoutes 		= require("./routes/blogs"),
 	commentRoutes 	= require("./routes/comments"),
 	indexRoutes 	= require("./routes/index");
 
-mongoose.connect("mongodb://localhost/1207cafe");
+//  mongodb://anfusion:devdb1207@ds243798.mlab.com:43798/1207cafe
+//connecting to database
+// var url = process.env.DATABASEURL || "mongodb://localhost/1207cafe";
+mongoose.connect("mongodb://Nick:devdb1207@ds243798.mlab.com:43798/1207cafe");
+
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({extended: true}));
@@ -55,7 +59,7 @@ app.use("/blogs/:id/comments", commentRoutes);
 app.use(indexRoutes);
 
 //handle signup logic
-app.listen(3000, function(){
+app.listen(process.env.PORT || 3000, function(){
 	console.log("1207 NOW RUNNING");
 });
 
