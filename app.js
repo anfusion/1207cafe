@@ -18,10 +18,9 @@ var	blogRoutes 		= require("./routes/blogs"),
 	commentRoutes 	= require("./routes/comments"),
 	indexRoutes 	= require("./routes/index");
 
-//  mongodb://anfusion:devdb1207@ds243798.mlab.com:43798/1207cafe
 //connecting to database
-// var url = process.env.DATABASEURL || "mongodb://localhost/1207cafe";
-mongoose.connect("mongodb://Nick:devdb1207@ds243798.mlab.com:43798/1207cafe");
+var url = process.env.DATABASEURL || "mongodb://localhost/1207cafe";
+mongoose.connect(url);
 
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
