@@ -85,8 +85,8 @@ router.put("/:comment_id", middlewareObj.checkCommentOwnership, function(req, re
 			console.log(err);
 			res.redirect("/blogs");
 		} else {
-			console.log(req.body.comment);
 			// redirect to show page
+			req.flash("success", "Edited comment.");
 			res.redirect("/blogs/" + req.params.id);
 		}
 	});

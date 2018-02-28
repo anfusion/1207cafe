@@ -16,7 +16,7 @@ middlewareObj.checkBlogOwnership = function(req, res, next){
 				res.redirect("back");
 			} else {
 				//does user own campground?
-				if (foundBlog.author.id.equals(req.user._id)) {
+				if (foundBlog.author.id.equals(req.user._id) || req.user.isAdmin) {
 					//move onto next code
 					next();					
 				} else {
@@ -32,7 +32,7 @@ middlewareObj.checkBlogOwnership = function(req, res, next){
 	}
 }
 
-//checks if user is authenticated or not
+//checks if user is th owner of a comment or not
 middlewareObj.checkCommentOwnership = function(req, res, next){
 	//is user logged in?
 	if(req.isAuthenticated()){
@@ -43,7 +43,7 @@ middlewareObj.checkCommentOwnership = function(req, res, next){
 				res.redirect("back");
 			} else {
 				//does user own comment?
-				if (foundComment.author.id.equals(req.user.id)){
+				if (foundComment.author.id.equals(req.user._id) || req.user.isAdmin){
 					//move on to the remainder of the route function
 					next();
 				} else {
@@ -66,5 +66,13 @@ middlewareObj.isLoggedIn = function(req, res, next){
 	req.flash("error", "You need to be logged in to do that.");
 	res.redirect("/login");
 }
+
+middlewareObj.isAdmin = function(req, res, next) {
+	if (req.user.isAdmin) {
+
+	};
+}
+
+
 
 module.exports = middlewareObj;

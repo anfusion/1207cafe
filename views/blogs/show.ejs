@@ -12,7 +12,7 @@
 		<% blog.comments.forEach(function(comment) {%>
 			<div>
 				<p style="display:inline"><strong><%=comment.author.username%></strong> - "<%=comment.text%>"</p>
-				<% if (currentUser && comment.author.id.equals(currentUser._id)){%>
+				<% if (currentUser && comment.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){%>
 					<a style="display:inline" href="/blogs/<%=blog._id%>/comments/<%=comment._id%>/edit"><button>Edit</button></a>
 					<form style="display:inline" action="/blogs/<%=blog._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
 						<button>Delete</button>
@@ -24,7 +24,7 @@
 
 	<a href="/blogs/<%=blog._id%>/comments/new"><button>Write Comment</button></a>
 	<br>
-		<% if (currentUser && blog.author.id.equals(currentUser._id)){%>
+		<% if (currentUser && blog.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){%>
 			<a href="/blogs/<%=blog._id%>/edit"><button>Edit</button></a>
 			<form action="/blogs/<%= blog._id %>?_method=DELETE" method="POST">
 				<button>Delete</button>

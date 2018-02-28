@@ -2,23 +2,25 @@
 
 <h1>Write a new blog</h1>
 
-<form action="/blogs" method="POST">
+<form action="/blogs" method="POST" enctype="multipart/form-data">
 	
-	<label>Blog title</label>
-	<input type="text" name="blog[title]" placeholder="Title of your blog">
+	<label for="blog-title">Blog title</label>
+	<input type="text"  id="blog-title" name="blog[title]" placeholder="Title of your blog" required>
 	<p></p>
 	
-	<label>Description</label>
-	<input type="text" name="blog[description]" placeholder="Quick teaser for your blog content">
+	<label for="description">Description</label>
+	<input type="text"  id="description" name="blog[description]" placeholder="Quick teaser for your blog content" required>
 	<p></p>
 
-	<label>Image</label>
-	<input type="text" name="blog[image]" placeholder="Paste image URL here">
+	<label for="image">Image</label>
+	<input type="file" id="image" name="image" accept="image/*" placeholder="Paste image URL here" required>
 	<p></p>
 
-	<label>Content</label>
-	<textarea name="blog[content]" placeholder="Write your blog here"></textarea>
-	<p></p>
+	<label for="content">Content</label>
+	<textarea id="content" name="blog[content]" placeholder="Write your blog here" required></textarea>
+	
+	<br>
+	<br>
 	
 	<button>Post your blog!</button>
 

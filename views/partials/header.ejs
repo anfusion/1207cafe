@@ -21,11 +21,16 @@
 			<a href="/register" class="nav_items"><p>Sign up</p></a>
 			<!-- if  user -->
 			<% } else { %>
-			<a href="#" class="nav_items"><p>Signed in as <%=currentUser.username%></p></a>
+			<a href="#" class="nav_items"><p>Signed in as <%=currentUser.username%>
+				<% if(currentUser && currentUser.isAdmin){ %>
+					<span>(admin)</span>
+				<% }  %>
+			</p></a>
 			<a href="/logout" class="nav_items"><p>Log out</p></a>
 			<% } %>
 
 		</nav>
+		<div style="padding: 10px">
 
 		<% if (error && error.length > 0) { %>
 		<h1 style="color:red; margin-left: 10px"><%= error %></h1>

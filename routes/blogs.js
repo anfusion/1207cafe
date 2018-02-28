@@ -2,7 +2,29 @@ var express 		= require("express"),
 	router 			= express.Router({mergeParams: true}),
 	Blog 			= require("../models/blog"),
 	expressSanitizer = require("express-sanitizer"),
-	middlewareObj	= require("../middleware");
+	middlewareObj	= require("../middleware"),
+	multer 			= require('multer'),
+	cloudinary 		= require('cloudinary');
+
+var storage = multer.diskStorage({
+  filename: function(req, file, callback) {
+    callback(null, Date.now() + file.originalname);
+  }
+});
+var imageFilter = function (req, file, cb) {
+    // accept image files only
+    if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/i)) {
+        return cb(new Error('Only image files are allowed!'), false);
+    }
+    cb(null, true);
+};
+var upload = multer({ storage: storage, fileFilter: imageFilter})
+
+cloudinary.config({ 
+  cloud_name: 'anfusion', 
+  api_key: "247953263581273", 
+  api_secret: "OMFMwbFcOXT6APToDJSPP8MSwnA"
+});
 
 
 //==================
@@ -29,27 +51,35 @@ router.get("/new", middlewareObj.isLoggedIn, function(req, res) {
 
 
 //CREATE ROUTE - add new blog to database
-router.post("/", middlewareObj.isLoggedIn, function(req, res) {
-	//remove harmful script
-	req.body.blog.content = req.sanitize(req.body.blog.content);
-	//create new blog post
-	Blog.create(req.body.blog, function(err, newlyCreated){
-		if (err){
-			console.log(err);
-		} else {
-			//adduser info to created blog
-			var author = {
-				id: req.user._id,
-				username: req.user.username
-			};
-			newlyCreated.author = author;
-			newlyCreated.save();
-			//redirect back to blogs page
-			req.flash("success", "Successfully created blog.")
-			res.redirect("/blogs");
-		}
+router.post("/", middlewareObj.isLoggedIn, upload.single('image'), function(req, res) {
+	cloudinary.v2.uploader.upload(req.file.path, function(error, result) {
+	 	// add cloudinary url for the image to the campground object under image property
+	  	req.body.blog.image = result.secure_url;
+ 		//remove harmful script
+		req.body.blog.content = req.sanitize(req.body.blog.content);
+	 	console.log(req.body.blog);
+		//create new blog post
+		Blog.create(req.body.blog, function(err, newlyCreated){
+			if (err){
+				req.flash('error', err.message);
+	      		return res.redirect('/blogs');
+			} else {
+				//adduser info to created blog
+				var author = {
+					id: req.user._id,
+					username: req.user.username
+				};
+				newlyCreated.author = author;
+				newlyCreated.save();
+				//redirect back to blogs page
+				req.flash("success", "Successfully created blog.")
+				res.redirect("/blogs");
+			}
+		});
 	});
 });
+
+
 
 
 //SHOW ROUTE - shows the full content of a particular blog
@@ -86,6 +116,8 @@ router.put("/:id", middlewareObj.checkBlogOwnership, function(req, res){
 			res.redirect("/blogs");
 		} else {
 			//redirect to show page for edited blog
+			eval(require("locus"));
+			req.flash("success", "Edited blog.");
 			res.redirect("/blogs/" + req.params.id);
 		}
 	});

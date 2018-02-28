@@ -1,7 +1,10 @@
 var express 	= require("express"),
 	router 		= express.Router({mergeParams: true}),
 	passport 	= require("passport"),
-	User 		= require("../models/user");
+	User 		= require("../models/user"),
+	async		= require("async"),
+	nodemailer	= require("nodemailer"),
+	crypto		= require("crypto");
 
 
 //==================
@@ -26,6 +29,9 @@ router.get("/register", function(req, res){
 router.post("/register", function(req, res){
 	//take and store username, do not store pw (hashed by passport)
 	var newUser = new User({username: req.body.username});
+	if (req.body.adminCode === "1207owner") {
+		newUser.isAdmin = true;
+	}
 	User.register(newUser, req.body.password, function(err, user){
 		if(err){
 			console.log(err);
@@ -81,6 +87,16 @@ router.get("/logout", function(req, res){
 	req.flash("success", "You have successfully logged out.")
 	res.redirect("/blogs");
 });
+
+//FORGOT AND RESET FUNCTIONALITY
+//forgot pw route
+router.get("/forgot", function(req, res){
+	res.render("forgot");
+});
+
+router.get("/reset/:id", function(req, res) {
+	res.render("reset")
+})
 
 //route that hits when nothing else does
 router.get("*", function(req, res) {
