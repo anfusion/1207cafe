@@ -2,12 +2,17 @@
 
 <form action="/register" method="POST">
 	<label for="username">Username</label>
-	<input type="text" name="username" placeholder="Enter username" required>
+	<input type="text" name="username" placeholder="Enter username" required autofocus>
 	<label for="password">Password</label>
 	<input type="password" name="password" placeholder="Enter password" required>
+	<label for="email">Email</label>
+	<input type="email" name="email" autofocus placeholder="Enter email">
 	<label for="adminCode">Admincode</label>
 	<input type="text" name="adminCode" placeholder="Enter admin code">
 	<button class="">Sign up</button> 
 </form>
+<br>
+<a href="/forgot">Forgot your password?</a>
+
 
 <% include ./partials/footer %>
