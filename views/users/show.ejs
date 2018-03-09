@@ -1,0 +1,34 @@
+<% include ../partials/header %>
+
+	<div style="margin: 10px">
+		<h1>User profile</h1>
+		<p>Username: <%= user.username %></p>
+
+		<p>Profile pic: </p><img src="<%= user.avatar %>">
+
+		<p>First name: <%= user.firstName %></p>
+
+		<p>Last: <%= user.lastName %></p>
+
+		<p>Email: <%= user.email %></p>
+
+		<% blogs.forEach(function (blog) { %>
+		<a href="/blogs/<%= blog.id %>">
+		<div style="background: whitesmoke; padding: 5px; border: 1px solid gray; opacity: 0.8">
+			<div style="padding: 0.5px; display: inline-block">
+				<h4><%=blog.title%></h4>
+				<p><%=blog.description%></p>
+			</div>
+			<div style="padding: 0.5px; display: inline-block">
+				<img style="width: 100px; height: 100px; display: inline-block" src="<%= blog.image %>">
+			</div>
+		</div></a>
+		<% }); %>
+
+		</div>
+
+
+	
+<% include ../partials/footer %>
+
+ 

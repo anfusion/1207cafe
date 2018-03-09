@@ -2,6 +2,7 @@ var express 	= require("express"),
 	router 		= express.Router({mergeParams: true}),
 	passport 	= require("passport"),
 	User 		= require("../models/user"),
+	Blog 		= require("../models/blog"),
 	async		= require("async"),
 	nodemailer	= require("nodemailer"),
 	crypto		= require("crypto");
@@ -28,7 +29,14 @@ router.get("/register", function(req, res){
 //route that takes form info and registers new user
 router.post("/register", function(req, res){
 	//take and store username, do not store pw (hashed by passport)
-	var newUser = new User({username: req.body.username, email: req.body.email});
+	var newUser = new User({	
+			username: req.body.username,
+			firstName: req.body.firstName,
+			lastName: req.body.lastName,
+			avatar: req.body.avatar,
+			email: req.body.email
+		});
+
 	if (req.body.adminCode === "1207owner") {
 		newUser.isAdmin = true;
 	}
@@ -86,6 +94,25 @@ router.get("/logout", function(req, res){
 	req.logout();
 	req.flash("success", "You have successfully logged out.")
 	res.redirect("/blogs");
+});
+
+
+
+//USER PROFILE
+router.get("/users/:id", function(req, res){
+	User.findById(req.params.id, function(err, foundUser) {
+		if(err){
+			req.flash("error", "Could not acces user profile.");
+			res.redirect("/blogs");
+		}
+		Blog.find().where("author.id").equals(foundUser._id).exec(function(err, foundBlogs){
+			if(err){
+				req.flash("error", "Could not acces user profile.");
+				res.redirect("/blogs");
+			}	
+		res.render("users/show", {user: foundUser, blogs: foundBlogs});
+		});
+	});
 });
 
 
