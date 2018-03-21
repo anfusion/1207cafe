@@ -83,7 +83,7 @@ router.post("/", middlewareObj.isLoggedIn, upload.single('image'), function(req,
 
 
 //SHOW ROUTE - shows the full content of a particular blog
-router.get("/:id", function(req, res){
+router.get("/:id", middlewareObj.isLoggedIn, function(req, res){
 	// find blog with the provided Id
 	Blog.findById(req.params.id).populate("comments").exec(function(err, foundBlog){
 		if(err) {

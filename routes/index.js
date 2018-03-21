@@ -80,11 +80,14 @@ router.post('/login', function(req, res, next) {
     	return res.redirect('/login'); 
     }
     req.logIn(user, function(err) {
-      if (err) { 
-      	return next(err);
-      	 }
-      req.flash("success", "Welcome back to 1207, " + user.username)
-      return res.redirect('/blogs');
+      	if (err) { 
+      		return next(err);
+      	}
+      	req.flash("success", "Welcome back to 1207, " + user.username);
+      	if (req.session.urlTest) {
+			return res.redirect(req.session.urlTest);
+		}
+      	return res.redirect('/blogs');
     });
   })(req, res, next);
 });
@@ -100,18 +103,24 @@ router.get("/logout", function(req, res){
 
 //USER PROFILE
 router.get("/users/:id", function(req, res){
+	console.log(req.params.id);
 	User.findById(req.params.id, function(err, foundUser) {
+		console.log(foundUser);
 		if(err){
-			req.flash("error", "Could not acces user profile.");
+			req.flash("error", "Could not access user profile.");
 			res.redirect("/blogs");
 		}
-		Blog.find().where("author.id").equals(foundUser._id).exec(function(err, foundBlogs){
-			if(err){
-				req.flash("error", "Could not acces user profile.");
-				res.redirect("/blogs");
-			}	
-		res.render("users/show", {user: foundUser, blogs: foundBlogs});
-		});
+		if (foundUser) {
+			Blog.find().where("author.id").equals(foundUser._id).exec(function(err, foundBlogs){
+				if(err){
+					req.flash("error", "Could not acces user profile.");
+					res.redirect("/blogs");
+				}	
+			res.render("users/show", {user: foundUser, blogs: foundBlogs});
+			});
+		}
+		req.flash("error", "Could not access user profile.");
+		res.redirect("/blogs");
 	});
 });
 
@@ -248,15 +257,6 @@ router.get("*", function(req, res) {
 
 
 
-
-
-
-
-
-
-
-
-
-
 //export these routes to app.js
 module.exports = router;
+
