@@ -10,10 +10,10 @@ middlewareObj.checkBlogOwnership = function(req, res, next){
 	if(req.isAuthenticated()){
 		//find blog to be edited
 		Blog.findById(req.params.id, function(err, foundBlog){
-			if(err){
+			if(err || !foundBlog){
 				console.log(err);
 				req.flash("error", "Blog not found.");
-				res.redirect("back");
+				res.redirect("/blogs");
 			} else {
 				//does user own campground?
 				if (foundBlog.author.id.equals(req.user._id) || req.user.isAdmin) {
@@ -27,8 +27,9 @@ middlewareObj.checkBlogOwnership = function(req, res, next){
 		});
 	} else {
 		//otherwise redirect
+		req.session.previousUrl = req.originalUrl;
 		req.flash("error", "Sorry, you need to be logged in to do that.")
-		res.redirect("/blogs");
+		res.redirect("/login");
 	}
 }
 
@@ -38,9 +39,9 @@ middlewareObj.checkCommentOwnership = function(req, res, next){
 	if(req.isAuthenticated()){
 		//find comments to edited
 		Comment.findById(req.params.comment_id, function(err, foundComment){
-			if(err){
-				req.flash("error", "Blog not found.");
-				res.redirect("back");
+			if(err || !foundComment){
+				req.flash("error", "Comment not found.");
+				res.redirect("/blogs");
 			} else {
 				//does user own comment?
 				if (foundComment.author.id.equals(req.user._id) || req.user.isAdmin){
@@ -53,8 +54,9 @@ middlewareObj.checkCommentOwnership = function(req, res, next){
 			}
 		});
 	} else {
+		req.session.previousUrl = req.originalUrl;
 		req.flash("error", "Sorry, you need to be logged in to do that.")
-		res.redirect("/blogs/" + req.params.id);
+		res.redirect("/login");
 	}
 }
 
@@ -63,7 +65,7 @@ middlewareObj.isLoggedIn = function(req, res, next){
 	if(req.isAuthenticated()){
 		return next();
 	}
-	req.session.urlTest = req.originalUrl;
+	req.session.previousUrl = req.originalUrl;
 	req.flash("error", "You need to be logged in to do that.");
 	res.redirect("/login");
 }
@@ -73,7 +75,6 @@ middlewareObj.isAdmin = function(req, res, next) {
 
 	};
 }
-
 
 
 module.exports = middlewareObj;

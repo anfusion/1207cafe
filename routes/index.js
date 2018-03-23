@@ -84,9 +84,11 @@ router.post('/login', function(req, res, next) {
       		return next(err);
       	}
       	req.flash("success", "Welcome back to 1207, " + user.username);
-      	if (req.session.urlTest) {
-			return res.redirect(req.session.urlTest);
-		}
+
+      	if (req.session.previousUrl) {
+      		return res.redirect(req.session.previousUrl);
+
+      	}
       	return res.redirect('/blogs');
     });
   })(req, res, next);
@@ -94,6 +96,7 @@ router.post('/login', function(req, res, next) {
 
 //log route route, redirects to blogs page
 router.get("/logout", function(req, res){
+	req.session.previousUrl = "/blogs";
 	req.logout();
 	req.flash("success", "You have successfully logged out.")
 	res.redirect("/blogs");
@@ -118,9 +121,10 @@ router.get("/users/:id", function(req, res){
 				}	
 			res.render("users/show", {user: foundUser, blogs: foundBlogs});
 			});
+		} else {
+			req.flash("error", "Could not access user profile.");
+			res.redirect("/blogs");
 		}
-		req.flash("error", "Could not access user profile.");
-		res.redirect("/blogs");
 	});
 });
 

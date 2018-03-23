@@ -33,14 +33,30 @@ cloudinary.config({
 
 //INDEX ROUTE - showing all blogs
 router.get("/", function(req, res){
-	//Get all the blogs from database
-	Blog.find({}, function(err, allBlogs){
-		if(err) {
-			console.log(err);
-		} else {
-			res.render("blogs/index", {blogs: allBlogs});
-		}
-	});
+	var noMatch;
+	if (req.query.search) {
+		const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+		// //Get matching blogs from database
+		Blog.find({ "title": regex}, function(err, allBlogs){
+			if(err) {
+				console.log(err);
+			} else {
+				if(allBlogs.length < 1) {
+					noMatch = "No blogs match that name. Please try again.";
+				}
+				res.render("blogs/index", {blogs: allBlogs, noMatch: noMatch});
+			}
+		});
+	} else {
+		//Get all the blogs from database
+		Blog.find({}, function(err, allBlogs){
+			if(err) {
+				console.log(err);
+			} else {
+				res.render("blogs/index", {blogs: allBlogs, noMatch: noMatch});
+			}
+		});
+	}
 });
 
 
@@ -83,11 +99,12 @@ router.post("/", middlewareObj.isLoggedIn, upload.single('image'), function(req,
 
 
 //SHOW ROUTE - shows the full content of a particular blog
-router.get("/:id", middlewareObj.isLoggedIn, function(req, res){
+router.get("/:id", function(req, res){
 	// find blog with the provided Id
 	Blog.findById(req.params.id).populate("comments").exec(function(err, foundBlog){
-		if(err) {
-			console.log(err);
+		if(err || !foundBlog) {
+			req.flash("error", "Blog not found.");
+			res.redirect("/blogs");
 		} else {
 			//render show template with that blog
 			res.render("blogs/show", {blog: foundBlog});
@@ -100,8 +117,13 @@ router.get("/:id", middlewareObj.isLoggedIn, function(req, res){
 router.get("/:id/edit", middlewareObj.checkBlogOwnership, function(req, res) {
 	//find blog to be edited
 	Blog.findById(req.params.id, function(err, foundBlog){
+		if(err || !foundBlog) {
+		req.flash("error", "Blog not found.");
+		res.redirect("/blogs");
+	} else {
 		//open up edit page with preexisting fields filled in
-		res.render("blogs/edit", {blog: foundBlog});					
+		res.render("blogs/edit", {blog: foundBlog});
+		}				
 	});
 });
 
@@ -116,7 +138,6 @@ router.put("/:id", middlewareObj.checkBlogOwnership, function(req, res){
 			res.redirect("/blogs");
 		} else {
 			//redirect to show page for edited blog
-			eval(require("locus"));
 			req.flash("success", "Edited blog.");
 			res.redirect("/blogs/" + req.params.id);
 		}
@@ -137,6 +158,9 @@ router.delete("/:id", middlewareObj.checkBlogOwnership, function(req, res){
 	});
 });
 
+function escapeRegex(text) {
+	return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+}
 
 //export these routes to app.js
 module.exports = router;
