@@ -5,11 +5,11 @@ var middlewareObj = {},
 	Comment = require("../models/comment");
 
 //checks if user owns blog or not
-middlewareObj.checkBlogOwnership = function(req, res, next){
+middlewareObj.checkBlogOwnership = (req, res, next) => {
 		//is user logged in?
 	if(req.isAuthenticated()){
 		//find blog to be edited
-		Blog.findById(req.params.id, function(err, foundBlog){
+		Blog.findById(req.params.id, (err, foundBlog) => {
 			if(err || !foundBlog){
 				console.log(err);
 				req.flash("error", "Blog not found.");
@@ -34,11 +34,11 @@ middlewareObj.checkBlogOwnership = function(req, res, next){
 }
 
 //checks if user is th owner of a comment or not
-middlewareObj.checkCommentOwnership = function(req, res, next){
+middlewareObj.checkCommentOwnership = (req, res, next) => {
 	//is user logged in?
 	if(req.isAuthenticated()){
 		//find comments to edited
-		Comment.findById(req.params.comment_id, function(err, foundComment){
+		Comment.findById(req.params.comment_id, (err, foundComment) => {
 			if(err || !foundComment){
 				req.flash("error", "Comment not found.");
 				res.redirect("/blogs");
@@ -61,7 +61,7 @@ middlewareObj.checkCommentOwnership = function(req, res, next){
 }
 
 //checks if user is logged in or not
-middlewareObj.isLoggedIn = function(req, res, next){
+middlewareObj.isLoggedIn = (req, res, next) => {
 	if(req.isAuthenticated()){
 		return next();
 	}
@@ -70,7 +70,7 @@ middlewareObj.isLoggedIn = function(req, res, next){
 	res.redirect("/login");
 }
 
-middlewareObj.isAdmin = function(req, res, next) {
+middlewareObj.isAdmin = (req, res, next) => {
 	if (req.user.isAdmin) {
 
 	};

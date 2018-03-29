@@ -12,9 +12,7 @@ var express 	= require("express"),
 //ROOT ROUTE
 //==================
 
-router.get("/", function(req, res){
-	res.render("landing");
-});
+router.get("/", (req, res) => res.render("landing"));
 
 
 //==================
@@ -22,12 +20,10 @@ router.get("/", function(req, res){
 //==================
 
 //shows new user registration page
-router.get("/register", function(req, res){
-	res.render("register");
-});
+router.get("/register", (req, res) => res.render("register"));
 
 //route that takes form info and registers new user
-router.post("/register", function(req, res){
+router.post("/register", (req, res) => {
 	//take and store username, do not store pw (hashed by passport)
 	var newUser = new User({	
 			username: req.body.username,
@@ -40,14 +36,14 @@ router.post("/register", function(req, res){
 	if (req.body.adminCode === "1207owner") {
 		newUser.isAdmin = true;
 	}
-	User.register(newUser, req.body.password, function(err, user){
+	User.register(newUser, req.body.password, (err, user) => {
 		if(err){
 			console.log(err);
 			req.flash("error", err.message);
 			return res.render("register", {error: err.message});
 		}
 		//authenticate user using local strategy, redirect to blogs
-		passport.authenticate("local")(req, res, function(){
+		passport.authenticate("local")(req, res, () => {
 			req.flash("success", "Welcome to 1207 " + user.username);
 			res.redirect("/blogs");
 		});
@@ -55,9 +51,7 @@ router.post("/register", function(req, res){
 });
 
 //show login page
-router.get("/login", function(req, res){
-	res.render("login");
-});
+router.get("/login", (req, res) => res.render("login"));
 
 //route that takes form info and logs in registered user
 // router.post("/login", passport.authenticate("local", 
@@ -69,8 +63,8 @@ router.get("/login", function(req, res){
 // 	}), function(req, res){
 // });
 
-router.post('/login', function(req, res, next) {
-  passport.authenticate('local', function(err, user, info) {
+router.post('/login', (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
     if (err) { 
     	req.flash("error", err.message);
     	return next(err);
@@ -79,7 +73,7 @@ router.post('/login', function(req, res, next) {
     	req.flash("error", "Could not log you in. Please check your username and password.");
     	return res.redirect('/login'); 
     }
-    req.logIn(user, function(err) {
+    req.logIn(user, err => {
       	if (err) { 
       		return next(err);
       	}
@@ -87,7 +81,6 @@ router.post('/login', function(req, res, next) {
 
       	if (req.session.previousUrl) {
       		return res.redirect(req.session.previousUrl);
-
       	}
       	return res.redirect('/blogs');
     });
@@ -95,7 +88,7 @@ router.post('/login', function(req, res, next) {
 });
 
 //log route route, redirects to blogs page
-router.get("/logout", function(req, res){
+router.get("/logout", (req, res) => {
 	req.session.previousUrl = "/blogs";
 	req.logout();
 	req.flash("success", "You have successfully logged out.")
@@ -105,16 +98,14 @@ router.get("/logout", function(req, res){
 
 
 //USER PROFILE
-router.get("/users/:id", function(req, res){
-	console.log(req.params.id);
-	User.findById(req.params.id, function(err, foundUser) {
-		console.log(foundUser);
+router.get("/users/:id", (req, res) => {
+	User.findById(req.params.id, (err, foundUser) => {
 		if(err){
 			req.flash("error", "Could not access user profile.");
 			res.redirect("/blogs");
 		}
 		if (foundUser) {
-			Blog.find().where("author.id").equals(foundUser._id).exec(function(err, foundBlogs){
+			Blog.find().where("author.id").equals(foundUser._id).exec((err, foundBlogs) => {
 				if(err){
 					req.flash("error", "Could not acces user profile.");
 					res.redirect("/blogs");
@@ -132,20 +123,18 @@ router.get("/users/:id", function(req, res){
 
 //FORGOT AND RESET FUNCTIONALITY
 //forgot pw route
-router.get("/forgot", function(req, res){
-	res.render("forgot");
-});
+router.get("/forgot", (req, res) => res.render("forgot"));
 
-router.post("/forgot", function (req, res, next) {
+router.post("/forgot", (req, res, next) => {
 	async.waterfall([
-		function(done) {
-			crypto.randomBytes(20, function(err, buf){
+		(done) => {
+			crypto.randomBytes(20, (err, buf) => {
 				var token = buf.toString('hex');
 				done(err, token);
 			});
 		},
-		function(token, done) {
-			User.findOne({ email: req.body.email }, function(err, user){
+		(token, done) => {
+			User.findOne({ email: req.body.email }, (err, user) => {
 				if(!user) {
 					req.flash("error", "Sorry, no account with that email exists.");
 					return res.redirect("forgot");
@@ -154,12 +143,12 @@ router.post("/forgot", function (req, res, next) {
 				user.resetPasswordToken = token;
 				user.resetPasswordExpires = Date.now() + 3600000; // 1hour
 
-				user.save(function(err){
+				user.save((err) => {
 					done(err, token, user);
 				});
 			});
 		},
-		function(token, user, done) {
+		(token, user, done) => {
 			var smtpTransport = nodemailer.createTransport({
 				service: 'Gmail',
 				auth: {
@@ -174,25 +163,29 @@ router.post("/forgot", function (req, res, next) {
 				to: user.email,
 				from: 'anfusiondevelopment@gmail.com',
 				subject: '1207cafe password reset',
-				text: 'You are receiving this because you (or someone else) have requested the reset of the password for your 1207cafe account.\n\n' +
-          'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-          'http://' + req.headers.host + '/reset/' + token + '\n\n' +
-          'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+				text: `You are receiving this because you (or someone else) have requested the reset of the password for your 1207cafe account.
+
+Please click on the following link, or paste this into your browser to complete the process:
+
+http:\/\/${req.headers.host}/reset/${token}
+
+If you did not request this, please ignore this email and your password will remain unchanged.
+`
 			};
-			smtpTransport.sendMail(mailOptions, function(err) {
+			smtpTransport.sendMail(mailOptions, err => {
 				req.flash("success", "An e-mail has been sent to " + user.email + " with further instructions.");
 				done(err, "done");
 				console.log("mail sent");
 			});
 		}
-	], function(err) {
+	], (err) => {
 		if (err) return next(err);
 		res.redirect("/blogs");
 	});
 })
 
-router.get("/reset/:token", function(req, res) {
-	User.findOne({resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user){
+router.get("/reset/:token", (req, res) => {
+	User.findOne({resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, (err, user) => {
 		if(!user) {
 			req.flash("error", "Password reset token is invalid or has expired.");
 			return res.redirect("/forgot");
@@ -201,21 +194,21 @@ router.get("/reset/:token", function(req, res) {
 	});
 });
 
-router.post("/reset/:token", function (req, res){
+router.post("/reset/:token", (req, res) => {
 	async.waterfall([
-		function(done) {
-			User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user){
+		(done) => {
+			User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, (err, user) => {
 				if(!user) {
 					req.flash("error", "Password reset token is invalid or has expired.");
 					return res.redirect("/forgot");
 				}
 				if(req.body.password === req.body.confirm) {
-					user.setPassword(req.body.password, function(err){
+					user.setPassword(req.body.password, err => {
 						user.resetPasswordToken = undefined;
 						user.resetPasswordExpires = undefined;
 
-						user.save(function(err){
-							req.logIn(user, function(err){
+						user.save(err => {
+							req.logIn(user, err => {
 								done(err, user);
 							});
 						});
@@ -226,32 +219,39 @@ router.post("/reset/:token", function (req, res){
 				}
 			});
 		},
-		function (user, done) {
+		(user, done) => {
+
 			var smtpTransport = nodemailer.createTransport({
 				service: 'Gmail',
 				auth: {
-					user: 'anfusiondevelopment@gmail.com',
-					pass: process.env.GMAILPW
-				}
+				    type: "OAuth2",
+				    user: 'anfusiondevelopment@gmail.com',
+				    clientId: process.env.CLIENT_ID,
+				    clientSecret: process.env.CLIENT_SECRET,
+				    refreshToken: process.env.REFRESH_TOKEN,                            
+				  }
 			});
+
 			var mailOptions = {
 				to: user.email,
 				from: 'anfusiondevelopment@gmail.com',
 				subject: 'Your 1207cafe password has been changed',
-				text: 'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n'
+				text: `This is a confirmation that the password for your account ${user.email} has just been changed.`
 			};
-			smtpTransport.sendMail(mailOptions, function(err) {
-				req.flash("success", "Success! Your password has ben changed.");
+
+			smtpTransport.sendMail(mailOptions, err => {
+				req.flash("success", "Success! Your password has been changed.");
 				done(err);
+				console.log("mail sent");
 			});
 		}
-	], function(err) {
+	], err => {
 		res.redirect("/blogs")
 	})
 });
 
 //route that hits when nothing else does
-router.get("*", function(req, res) {
+router.get("*", (req, res) => {
 	res.send("someting go bad mon.");
 });
 

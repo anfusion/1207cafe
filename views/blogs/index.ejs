@@ -16,7 +16,7 @@
 	<h3><%= noMatch %></h3>
 	<% } %>
 
-	<% blogs.forEach(function(blog) {%>
+	<% blogs.forEach(blog => {%>
 	<div class="flex_blog_card bg1">						
 		<div class="flex_blog_card_picture">
 			<a href="/blogs/<%= blog._id %>"><img src="<%= blog.image %>"></a>

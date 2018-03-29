@@ -45,7 +45,7 @@ passport.deserializeUser(User.deserializeUser());
 
 
 //PROVIDE CURRENT USER VARIABLE TO ALL PAGES 
-app.use(function(req, res, next){
+app.use((req, res, next) => {
 	res.locals.currentUser = req.user;
 	res.locals.error = req.flash("error");
 	res.locals.success = req.flash("success");
@@ -58,9 +58,7 @@ app.use("/blogs/:id/comments", commentRoutes);
 app.use(indexRoutes);
 
 //handle signup logic
-app.listen(process.env.PORT || 3000, function(){
-	console.log("1207 NOW RUNNING");
-});
+app.listen(process.env.PORT || 3000, () => console.log("1207 NOW RUNNING"));
 
 
 
