@@ -10,16 +10,16 @@
 
 
 </section>
-
-<section class="cards">
 	<% if (noMatch !== null) { %>
-	<h3><%= noMatch %></h3>
+	<span><%= noMatch %></span>
 	<% } %>
+<section class="cards">
+
 
 	<% blogs.forEach(blog => {%>
 	<div class="flex_blog_card bg1">						
 		<div class="flex_blog_card_picture">
-			<a href="/blogs/<%= blog._id %>"><img src="<%= blog.image %>"></a>
+			<a href="/blogs/<%= blog._id %>" class="blog-image-center"><img class="blog-index-image" src="<%= blog.image %>"></a>
 		</div>
 		<div class="flex_blog_card_text ">
 			<a href="/blogs/<%= blog._id %>"><h3><%=blog.title%></h3></a>

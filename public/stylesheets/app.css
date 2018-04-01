@@ -1,13 +1,30 @@
+@import url(https://fonts.googleapis.com/css?family=Oswald:400,700);
+
 html {
-  box-sizing: border-box;
-  font-family: "San Fransisco", Arial, sans-serif;
+	font-family: 'Oswald', sans-serif;
 }
 
 *, *:before, *:after {
-  box-sizing: inherit;
+	margin: 0;
+	padding: 0;
+  	box-sizing: inherit;
+}
+
+.super-container {
+	padding: 4em 1em 1em 1em;
+	margin: 0 auto;
+	width: 870px;
+}
+
+@media screen and (max-width: 835px) {
+	.super-container {
+		width: 100%;
+	}
 }
 
 body {
+	box-sizing: border-box;
+	line-height: 2em;
 	margin: 0;
 	background-color: whitesmoke;
 	background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.4) 100%), url(/images/backgroundscreenshotimage.png);
@@ -15,62 +32,158 @@ body {
 
 /*NAVBAR CSS*/
 
-nav {
-	display: flex;
-	flex-direction: row;
-	flex-wrap: nowrap;
-	justify-content: space-around;	
-	height: 7vh;
-	background-color: whitesmoke;
-	border-bottom: 1px solid gray;
-	max-height: 45px;
-	position: relative;
-	z-index: 3;
+
+.navbar {
+	background-color: #DFDEDE;
+	opacity: 0.97;
+	position: fixed;
+	min-width: 100%;
+	z-index: 100;
+	border-bottom: 1px solid lightgray;
 }
 
-.nav_items {
-	flex-basis: 25%;
-	padding: 5px;
+.wrapper {
+	margin: 0 auto;
+	padding: 0 0 0 2%;
+	transition: all .3s ease;
+}
+
+nav .wrapper {
+	align-items: stretch;
+	display: flex;
+	justify-content: space-between;
+	position: relative;
+	transition: all .3s ease;
+}
+
+.logo {
+	background-image: url(/images/image_1207logobig_button.png);
+	display: inline-block;
+	height: 2em;
+	margin: 1em 0 1em .5em;
+}
+
+nav div img {
+	max-width: 100%;
+	padding:0;
+	height: 100%;
+}
+
+nav ul {
+	display: flex;
+	justify-content: space-around;
+	list-style-type: none;
+	width: 40%;
+}
+
+nav ul a {
+	color: #E84545;
+	text-decoration: none;
+	transition: all .8s ease;
+}
+
+nav ul a:hover {
+	color: #903749;
+}
+
+nav li {
+/*took out inline block*/
 	display: flex;
 	align-items: center;
-    justify-content: center;
-} 
-
-nav a {
-	color: #A9A9A9;
-	text-align: center;
-	background: -moz-linear-gradient(top, #f5f5f5 0%, #fff 100%);
-	/* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f5f5f5), color-stop(100%, #fff));
-	/* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top, #f5f5f5 0%, #fff 100%);
-	/* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top, #f5f5f5 0%, #fff 100%);
-	/* Opera 11.10+ */
-	background: linear-gradient(to bottom, #f5f5f5 0%, #fff 100%);
-	/* W3C standard, IE10+ */
-	filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#f5f5f5', endColorstr='#fff', GradientType=0);
-	/* IE6-9 */
 }
 
-.nav_border {
-    border-right: 1px solid #f3f3f3;
+nav #menu-toggle {
+	display: none;
 }
 
-nav a:link {
-  text-decoration: none;
+nav .label-toggle {
+	display: none;
 }
 
-nav a:visited {
-  color: #A9A9A9;
+
+
+@media screen and (max-width: 600px) {
+
+	.wrapper {
+		padding: 0 2%;
+	}
+
+	nav nav ul a {
+		color: #53354A;
+	}
+
+	nav ul {
+		background-color: rgba(232, 69, 96, .55);
+		display: block;
+		height: 0;
+		list-style-type: none;
+		opacity: 0;
+		text-align: center;
+		transition: all 0.3s ease;
+		width: 100%;
+		visibility: hidden;
+	}
+
+	nav ul li {
+		background-color: rgba(232, 69, 96, 0.2);
+		color: transparent;
+		display: block;
+		font-size: 1.5em;
+		padding: 1em 0;
+		opacity: 1;
+		transition: all 0.3s ease;
+	}
+	
+	nav li:last-child {
+		border-bottom: 3px solid transparent;
+	}
+
+	nav #menu-toggle:checked ~ ul {
+		opacity: 1;
+		height: 15.5em;
+		visibility: visible;
+		margin-bottom: 2%;
+	}
+
+	nav #menu-toggle:checked ~ ul li {
+		border-bottom: 2px solid #DFDEDE;
+	}
+	
+	nav #menu-toggle:checked ~ ul li:last-child {
+		border-bottom: 3px solid transparent;
+	}
+
+	nav .label-toggle {
+		background: linear-gradient(
+					to bottom,
+					rgba(232, 69, 96, 1) 0%,
+					rgba(232, 69, 96, 1) 20%,
+					transparent 20%,
+					transparent 40%,
+					rgba(232, 69, 96, 1) 40%,
+					rgba(232, 69, 96, 1) 60%,
+					transparent 60%,
+					transparent 80%,
+					rgba(232, 69, 96, 1) 80%,
+					rgba(232, 69, 96, 1) 100%
+					);
+	    cursor: pointer;
+	    display: block;
+	    float: right;
+	    height: 1.5em;
+	    width: 1.5em;
+	    position: absolute;
+	    top: 1.3em;
+	    right: 1.3em;
+	}
+
+	nav .wrapper {
+		display: block;
+	}
 }
 
-nav a:hover {
-  background: #F5F5F5;
-  color: #111;
-  /* x offset, y offset, size, color */
-  transition: all 0.3s ease;
-}
+/*END OF NAV*/
+
 
 nav img {
 	max-width: 90%;
@@ -78,7 +191,7 @@ nav img {
 }
 
 .flex_container_all {
-	height: 93vh;
+	height: calc(100vh - 4em);
 	display: flex;
 	flex-direction: row;
 	flex-wrap: nowrap;
@@ -210,7 +323,7 @@ div a {
     bottom: 0;
     left: 0;
     background: #000;
-    opacity: 0.94;
+    opacity: 0.95;
     filter: alpha(opacity=60);
 }
 
@@ -302,25 +415,23 @@ div a {
 
 
 
-
-
-
-
 /* START CARDS HERE*/
 
 .blog_heading {
-	margin-top: 30px;
+    padding-top: 2em;
+    padding-bottom: 1em;
 	max-width: 835px;
 	margin: 0 auto;
 	display: flex;
 	flex-flow: row;
 	align-items: center;
-	justify-content: space-between;}
+	justify-content: space-between;
+}
 
 .cards {
-	margin-top: 30px;
+	width: auto;
 	max-width: 835px;
-	margin: auto;
+	margin: 0 auto;
 	display: flex;
 	flex-flow: row wrap;
 	justify-content: space-between;
@@ -329,12 +440,18 @@ div a {
 
 .flex_blog_card {
 /*	background-color: #E84560;
-*/	max-width: 400px;
+*/	flex: 0 1 49%;
 	display: flex;
 	flex-direction: row;
 	flex-wrap: nowrap;
-	align-items:flex-start;
-	margin: 7px;
+	align-items: stretch;
+	margin: 7px 0;
+}
+
+@media screen and (max-width: 700px) {
+	.flex_blog_card {
+		min-width: 100%;
+	}
 }
 
 .flex_blog_card {
@@ -347,14 +464,20 @@ div a {
 }
 
 .flex_blog_card_picture {
-	flex: 0 1 50%;
+	flex: 1 1 50%;
 	display: flex;
 	align-items: flex-start;
-	justify-content: flex-end;
+	justify-content: space-around;
 	height: auto;
 }
 
-div img {
+.blog-image-center {
+	display: flex;
+	align-items: center;
+}
+
+
+.blog-index-image {
 	max-width: 100%;
 	min-height: 0%;
 	padding: 10px;
@@ -399,10 +522,10 @@ div img {
 	color: white;	
 }
 
-#map {
-    height: 400px;
-    width: 100%;
-}
+
+
+
+
 
 
 

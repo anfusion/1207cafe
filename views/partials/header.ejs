@@ -11,35 +11,39 @@
     </head>
     
     <body>
-
-    	<nav class="navigation">
-			<a href="/" class="nav_items nav_border"><img src="/images/image_1207logobig_button.png"></a>
-			<a href="/blogs" class="nav_items nav_border"><p>Blog</p></a>
-			<!-- if no user -->
-			<% if(!currentUser){ %>
-			<a href="/login" class="nav_items nav_border"><p>Log in</p></a>
-			<a href="/register" class="nav_items"><p>Sign up</p></a>
-			<!-- if  user -->
-			<% } else { %>
-			<a href="#" class="nav_items"><p>Signed in as <%=currentUser.username%>
-				<% if(currentUser && currentUser.isAdmin){ %>
-					<span>(admin)</span>
-				<% }  %>
-			</p></a>
-			<a href="/logout" class="nav_items"><p>Log out</p></a>
-			<% } %>
-
+		<nav class="navbar">
+			<nav class="wrapper">
+				<div class="logo"><a href="/"><img src="images/image_1207logobig_button.png"></a></div>
+				<input type="checkbox" id="menu-toggle" />
+				<label for="menu-toggle" class="label-toggle"></label>
+				<ul>
+					<li><a href="/blogs">Blog</a></li>
+					<!-- if no user -->					
+					<% if(!currentUser){ %>
+					<li><a href="/login">Log in</a></li>
+					<li><a href="register">Sign up</a></li>
+					<!-- if  user -->
+					<% } else { %>
+						<li><a href="/user/<%= currentUser._id%>"><%= currentUser.username %>
+							<% if(currentUser && currentUser.isAdmin) { %>
+							<span>(admin)</span>
+							<% } %>						
+						</a></li>
+						<li><a href="/logout">Log out</a></li>
+					<% } %>
+				</ul>
+			</nav>
 		</nav>
-		<div style="padding: 10px">
+		<div class="super-container">
 
 		<% if (error && error.length > 0) { %>
-		<h1 style="color:red; margin-left: 10px"><%= error %></h1>
+			<h1 style="color:red; margin-left: 10px; padding: 1em"><%= error %></h1>
 		<% } %>
 
 		<% if (success && success.length > 0) { %>
-		<h1 style="color:blue; margin-left: 10px"><%= success %></h1>
+			<h1 style="color:blue; margin-left: 10px"><%= success %></h1>
 		<% } %>
+
 
 		
 
-	    
