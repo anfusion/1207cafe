@@ -13,7 +13,7 @@
     <body>
 		<nav class="navbar">
 			<nav class="wrapper">
-				<div class="logo"><a href="/"><img src="images/image_1207logobig_button.png"></a></div>
+				<div class="logo"><a href="/"><img src="/images/image_1207logobig_button.png"></a></div>
 				<input type="checkbox" id="menu-toggle" />
 				<label for="menu-toggle" class="label-toggle"></label>
 				<ul>
@@ -37,11 +37,11 @@
 		<div class="super-container">
 
 		<% if (error && error.length > 0) { %>
-			<h1 style="color:red; margin-left: 10px; padding: 1em"><%= error %></h1>
+			<h2 class="blog-header-group" style="color: red"><%= error %></h2>
 		<% } %>
 
 		<% if (success && success.length > 0) { %>
-			<h1 style="color:blue; margin-left: 10px"><%= success %></h1>
+			<h2 class="blog-header-group" style="color: gray"><%= success %></h2>
 		<% } %>
 
 

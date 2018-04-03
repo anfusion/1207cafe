@@ -1,15 +1,14 @@
 <% include ../partials/header %>
 
 
-<section class="blog_heading">
-	<h1>1207 Blog</h1>
-	<form action="/blogs" method="GET">
+<header class="blog-header-group blog-index-header">
+	<h1 class="blog-index-h1">1207 Blog</h1>
+	<form class="blog-index-search" action="/blogs" method="GET">
 		<input type="text" name="search" placeholder ="Search blogs...">
 		<button>Go</button>
-	</form>	<a href="/blogs/new">Write a new blog</a>
-
-
-</section>
+	</form>
+	<a class="blog-index-newButton" href="/blogs/new">Write a new blog</a>
+</header>
 	<% if (noMatch !== null) { %>
 	<span><%= noMatch %></span>
 	<% } %>
@@ -19,7 +18,7 @@
 	<% blogs.forEach(blog => {%>
 	<div class="flex_blog_card bg1">						
 		<div class="flex_blog_card_picture">
-			<a href="/blogs/<%= blog._id %>" class="blog-image-center"><img class="blog-index-image" src="<%= blog.image %>"></a>
+			<a href="/blogs/<%= blog._id %>" class="blog-image-center"><img class="blog-image" src="<%= blog.image %>"></a>
 		</div>
 		<div class="flex_blog_card_text ">
 			<a href="/blogs/<%= blog._id %>"><h3><%=blog.title%></h3></a>

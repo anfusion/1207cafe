@@ -13,7 +13,7 @@ html {
 .super-container {
 	padding: 4em 1em 1em 1em;
 	margin: 0 auto;
-	width: 870px;
+	max-width: 870px;
 }
 
 @media screen and (max-width: 835px) {
@@ -417,16 +417,38 @@ div a {
 
 /* START CARDS HERE*/
 
-.blog_heading {
+.blog-header-group {
     padding-top: 2em;
     padding-bottom: 1em;
 	max-width: 835px;
-	margin: 0 auto;
 	display: flex;
 	flex-flow: row;
 	align-items: center;
 	justify-content: space-between;
 }
+
+@media screen and (max-width: 450px) {
+	.blog-index-header {
+		flex-wrap: wrap;
+		justify-content: space-around;
+		flex-basis: 45%;
+		text-align: center;
+	}
+	
+	.blog-index-h1 {
+		flex-basis: 50%;
+	}
+
+	.blog-index-newButton {
+		flex-basis: 50%;
+	}
+
+	.blog-index-search {
+		margin-top: .6em;
+		order: 2;
+	}
+}
+
 
 .cards {
 	width: auto;
@@ -477,7 +499,7 @@ div a {
 }
 
 
-.blog-index-image {
+.blog-image {
 	max-width: 100%;
 	min-height: 0%;
 	padding: 10px;
@@ -521,6 +543,85 @@ div a {
 	background-color: rgba(20, 17, 110, 0.55);
 	color: white;	
 }
+
+/*BLOG SHOW PAGE*/
+
+.blog-show-supercontainer {
+
+}
+
+.blog-show-header {
+	margin: 2em .5em 1em .5em;
+    flex-wrap: nowrap;
+    justify-content: center;
+    text-align: center;
+}
+
+.blog-show-title {
+    font-size: 3em;
+	border-bottom: 2px solid black;
+	height: auto;
+    line-height: 2em;
+}
+
+.blog-show-descrip {
+    font-style: italic;
+    text-align: center;
+    font-size: 1.5em;
+}
+
+.blog-show-blogContainer {
+	margin-top: 1.5em;
+	margin-bottom: 2em;
+	padding: 1em 0 2em 0;
+	border-top: 1px solid black;
+	border-bottom: 2px solid black;
+	display: flex;
+	align-items: flex-start;
+}
+
+.blog-show-image {
+	max-width: 50%;
+}
+
+.blog-show-content {
+	max-width: 50%;
+	font-weight: 400;
+	padding: .5em 1em .5em 1em;
+}
+
+@media screen and (max-width: 550px) {
+
+	.blog-show-blogContainer {
+		flex-wrap: wrap;
+	}
+
+
+	.blog-show-image {
+		max-width: 100%;
+		margin-bottom: .5em;
+		padding: 0;
+	}
+
+	.blog-show-content {
+		max-width: 100%;
+	}
+}
+
+
+
+.blog-show-writtenBy
+
+.blog-show-button
+
+.blog-show-button-edit
+
+.blog-show-button-delete
+
+
+
+
+
 
 
 
