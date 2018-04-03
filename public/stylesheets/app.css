@@ -551,14 +551,14 @@ div a {
 }
 
 .blog-show-header {
-	margin: 2em .5em 1em .5em;
+	margin: 1.5em .5em 1em .5em;
     flex-wrap: nowrap;
     justify-content: center;
     text-align: center;
 }
 
 .blog-show-title {
-    font-size: 2em;
+    font-size: 3em;
 	border-bottom: 2px solid black;
 	height: auto;
     line-height: 2em;
