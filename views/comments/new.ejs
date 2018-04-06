@@ -1,11 +1,11 @@
 <% include ../partials/header %>
 
-<h2>Write a comment about <em><%= blog.title %></em></h2>
+<h2 class="margin-top-and-bottom">Write a comment about <em><%= blog.title %></em></h2>
 
 <form action="/blogs/<%= blog._id %>/comments" method="POST">
 
 	<label>Content</label>
-	<textarea name="comment[text]" placeholder="Write your comment here" autofocus></textarea>
+	<textarea class="block med-text-box" name="comment[text]" placeholder="Write your comment here" autofocus></textarea>
 	<p></p>
 	
 	<button>Post your comment!</button>

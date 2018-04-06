@@ -1,24 +1,21 @@
 <% include ../partials/header %>
 
-<h1>Edit your blog</h1>
+<h1 class="margin-top-and-bottom">Edit your blog</h1>
 
 <form action="/blogs/<%= blog._id %>?_method=PUT" method="POST">
 	
 	<label>Blog title</label>
-	<input type="text" name="blog[title]" value="<%= blog.title %>" placeholder="Title of your blog" autofocus>
+	<input class="block" type="text" name="blog[title]" value="<%= blog.title %>" placeholder="Title of your blog" autofocus>
 	<p></p>
 	
 	<label>Description</label>
-	<input type="text" name="blog[description]" value="<%= blog.description %>" placeholder="Quick teaser for your blog content">
-	<p></p>
+	<input class="block" type="text" name="blog[description]" value="<%= blog.description %>" placeholder="Quick teaser for your blog content">
 
 	<label>Image</label>
-	<input type="text" name="blog[image]" value="<%= blog.image %>" placeholder="Paste image URL here">
-	<p></p>
+	<input class="block" type="text" name="blog[image]" value="<%= blog.image %>" placeholder="Paste image URL here">
 
 	<label>Content</label>
-	<textarea name="blog[content]" placeholder="Write your blog here"><%= blog.content %></textarea>
-	<p></p>
+	<textarea  class="block large-text-box" name="blog[content]" placeholder="Write your blog here"><%= blog.content %></textarea>
 	
 	<button>Update your blog!</button>
 

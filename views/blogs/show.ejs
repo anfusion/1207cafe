@@ -1,11 +1,17 @@
 <% include ../partials/header %>
+ 	<div class="show-supercontainer">
 
-	<div class="blog-show-supercontainer">
 		<div class="blog-header-group blog-show-header">
 			<h1 class="blog-show-title"><%=blog.title%></h1>
 		</div>
 		<div class="blog-show-header">
 			<p class="blog-show-descrip"><%= blog.description %></p>
+			<p class="blog-show-header">
+				<em>Written by 
+					<a href="/users/<%= blog.author.id %>"><%=blog.author.username%>
+					</a>
+				</em>
+			</p>
 		</div>	
 
 		<div class="blog-show-blogContainer">
@@ -14,37 +20,41 @@
 				<%=blog.content%>
 			</p>
 		</div>
+		<p class="blog-show-para-endBorder"> </p>
 
-			<p><em>Written by: <a href="/users/<%= blog.author.id %>"><%=blog.author.username%></a></em></p>
-			<p>
-				<a href="/blogs">Return to all blogs</a>
-			</p>
-			<% blog.comments.forEach(function(comment) {%>
-				<div>
-					<p class="blog-show-writtenBy"><strong><a href="/users/<%= comment.author.id %>"><%=comment.author.username%></a></strong> - "<%=comment.text%>"</p>
-					<% if (currentUser && comment.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){%>
-						<a class="blog-show-button blog-show-button-edit" href="/blogs/<%=blog._id%>/comments/<%=comment._id%>/edit"><button>Edit comment</button></a>
-						<form class="blog-show-button blog-show-button-delete" action="/blogs/<%=blog._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
-							<button>Delete comment</button>
-						</form>
-						<p></p>
-					<% } %>	
-				</div>
-			<% }); %>
-	</div>
 
-	<a href="/blogs/<%=blog._id%>/comments/new"><button>Write Comment</button></a>
-	<br>
+		<p>Do you want to leave a comment?</p>
+	<a href="/blogs/<%=blog._id%>/comments/new"><button class="inline-button">Write Comment</button></a>
+	<p>--------</p>
+		<% blog.comments.forEach(function(comment) {%>
+			<div>
+				<p class="blog-show-writtenBy"><strong><a href="/users/<%= comment.author.id %>"><%=comment.author.username%></a></strong> - "<%=comment.text%>"</p>
+				<% if (currentUser && comment.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){%>
+					<a class="blog-show-button blog-show-button-edit" href="/blogs/<%=blog._id%>/comments/<%=comment._id%>/edit"><button class="inline-button">Edit comment</button></a>
+					<form class="inline-button blog-show-button blog-show-button-delete" action="/blogs/<%=blog._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
+						<button class="inline-button">Delete comment</button>
+					</form>
+					<p></p>
+				<% } %>	
+			</div>
+		<p>--------</p>
+		<% }); %>
+
+	<p>Do you want to edit your blog?</p>
 		<% if (currentUser && blog.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){%>
-			<a href="/blogs/<%=blog._id%>/edit"><button>Edit blog</button></a>
-			<form action="/blogs/<%= blog._id %>?_method=DELETE" method="POST">
-				<button>Delete blog</button>
+			<a href="/blogs/<%=blog._id%>/edit"><button class="inline-button">Edit blog</button></a>
+			<form class="inline-button" action="/blogs/<%= blog._id %>?_method=DELETE" method="POST">
+				<button class="inline-button">Delete blog</button>
 			</form>
 		<% } %>
 
-	<div id="map"></div>
+		<p>
+			<a href="/blogs">Return to all blogs</a>
+		</p>
 
-    <script>
+  <!--	<div id="map"></div>
+
+   <script> 
       function initMap() {
  	    var lat = 34.3852;
  	    var lng = 132.4553;
@@ -61,6 +71,7 @@
     </script>
 
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyADYvh9oxcf_X8GG1-9XFZx1XV0tL25NEk&callback=initMap"></script>
+-->
 	
 <% include ../partials/footer %>
 

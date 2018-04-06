@@ -1,14 +1,14 @@
 
 <% include ../partials/header %>
 
-<h2>Edit comments for <i><%= blog.title%></i></h2>
+<h2 class="margin-top-and-bottom">Edit comments for <i><%= blog.title%></i></h2>
 
 
 
 <form action="/blogs/<%= blog._id %>/comments/<%= comment._id %>?_method=PUT" method="POST">
 
 	<label>Content</label>
-	<textarea name="comment[text]" placeholder="Write your comment here" autofocus><%= comment.text %></textarea>
+	<textarea class="block med-text-box" name="comment[text]" placeholder="Write your comment here" autofocus><%= comment.text %></textarea>
 	<p></p>
 	
 	<button>Save your changes!</button>

@@ -1,32 +1,36 @@
 <% include ../partials/header %>
 
-	<div style="margin: 10px">
-		<h1>User profile</h1>
-		<p>Username: <%= user.username %></p>
-
-		<p>Profile pic: </p><img src="<%= user.avatar %>">
-
-		<p>First name: <%= user.firstName %></p>
-
-		<p>Last: <%= user.lastName %></p>
-
-		<p>Email: <%= user.email %></p>
-
-		<% blogs.forEach(function (blog) { %>
-		<a href="/blogs/<%= blog.id %>">
-		<div style="background: whitesmoke; padding: 5px; border: 1px solid gray; opacity: 0.8">
-			<div style="padding: 0.5px; display: inline-block">
-				<h4><%=blog.title%></h4>
-				<p><%=blog.description%></p>
-			</div>
-			<div style="padding: 0.5px; display: inline-block">
-				<img style="width: 100px; height: 100px; display: inline-block" src="<%= blog.image %>">
-			</div>
-		</div></a>
-		<% }); %>
-
+	<div class="user-show">
+		<div class="user-show-details">
+			<h1 class="user-show-profile-items">User profile: <%= user.username %></h1>
+			<p class="user-show-profile-items">First name: <%= user.firstName %></p>
+			<p class="user-show-profile-items">Last: <%= user.lastName %></p>
+			<p class="user-show-profile-items">Email: <%= user.email %></p>
+		</div>
+		<div class="user-show-image">
+			<img src="<%= user.avatar %>">
 		</div>
 
+	</div>
+	<h2 class="user-show-otherBlogs">Other blogs by <%= user.username%>:</h2>
+	<section class="cards">
+
+
+		<% blogs.forEach(blog => {%>
+		<div class="flex_blog_card bg1">						
+			<div class="flex_blog_card_picture">
+				<a href="/blogs/<%= blog._id %>" class="blog-image-center"><img class="blog-image" src="<%= blog.image %>"></a>
+			</div>
+			<div class="flex-blog-card-text">
+				<a href="/blogs/<%= blog._id %>"><h3><%=blog.title%></h3></a>
+				<p><%=blog.description%></p>
+				<p>- <%=blog.created.toDateString()%></p>
+
+			</div>			
+		</div>
+		<% }); %>	
+
+	</section>
 
 	
 <% include ../partials/footer %>

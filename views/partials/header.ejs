@@ -24,7 +24,7 @@
 					<li><a href="register">Sign up</a></li>
 					<!-- if  user -->
 					<% } else { %>
-						<li><a href="/user/<%= currentUser._id%>"><%= currentUser.username %>
+						<li><a href="/users/<%= currentUser._id%>"><%= currentUser.username %>
 							<% if(currentUser && currentUser.isAdmin) { %>
 							<span>(admin)</span>
 							<% } %>						
@@ -34,16 +34,15 @@
 				</ul>
 			</nav>
 		</nav>
+		
 		<div class="super-container">
 
-		<% if (error && error.length > 0) { %>
-			<h2 class="blog-header-group" style="color: red"><%= error %></h2>
-		<% } %>
-
-		<% if (success && success.length > 0) { %>
-			<h2 class="blog-header-group" style="color: gray"><%= success %></h2>
-		<% } %>
-
+			<% if (error && error.length > 0) { %>
+				<h2 class="blog-header-group" style="color: red"><%= error %></h2>
+			<% } %>
+			<% if (success && success.length > 0) { %>
+				<h2 class="blog-header-group" style="color: gray"><%= success %></h2>
+			<% } %>
 
 		
 

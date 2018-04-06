@@ -1,38 +1,34 @@
 <% include ../partials/header %>
 
+	<header class="blog-header-group blog-index-header">
+		<h1 class="blog-index-h1">1207 Blog</h1>
+		<form class="blog-index-search" action="/blogs" method="GET">
+			<input class="blog-index-input" type="text" name="search" placeholder ="Search blogs...">
+			<button class="blog-index-input-button">Go</button>
+		</form>
+		<a class="blog-index-newButton" href="/blogs/new">Write a new blog</a>
+	</header>
+		<% if (noMatch !== null) { %>
+		<span><%= noMatch %></span>
+		<% } %>
+	<section class="cards">
 
-<header class="blog-header-group blog-index-header">
-	<h1 class="blog-index-h1">1207 Blog</h1>
-	<form class="blog-index-search" action="/blogs" method="GET">
-		<input type="text" name="search" placeholder ="Search blogs...">
-		<button>Go</button>
-	</form>
-	<a class="blog-index-newButton" href="/blogs/new">Write a new blog</a>
-</header>
-	<% if (noMatch !== null) { %>
-	<span><%= noMatch %></span>
-	<% } %>
-<section class="cards">
 
+		<% blogs.forEach(blog => {%>
+		<div class="flex_blog_card bg1">						
+			<div class="flex_blog_card_picture">
+				<a href="/blogs/<%= blog._id %>" class="blog-image-center"><img class="blog-image" src="<%= blog.image %>"></a>
+			</div>
+			<div class="flex-blog-card-text">
+				<a href="/blogs/<%= blog._id %>"><h3><%=blog.title%></h3></a>
+				<p><%=blog.description%></p>
+				<p>- <%=blog.created.toDateString()%></p>
 
-	<% blogs.forEach(blog => {%>
-	<div class="flex_blog_card bg1">						
-		<div class="flex_blog_card_picture">
-			<a href="/blogs/<%= blog._id %>" class="blog-image-center"><img class="blog-image" src="<%= blog.image %>"></a>
+			</div>			
 		</div>
-		<div class="flex_blog_card_text ">
-			<a href="/blogs/<%= blog._id %>"><h3><%=blog.title%></h3></a>
-			<p><%=blog.description%></p><br>
-			<p><%=blog.created.toDateString()%></p><br>
-			<p>
-				<a href="/blogs/<%= blog._id %>">Read blog</a>
-			</p>
-		</div>			
-	</div>
-	<% }); %>	
+		<% }); %>	
 
-</section>
-
+	</section>
 <% include ../partials/footer %>
 
 
