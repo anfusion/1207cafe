@@ -11,6 +11,25 @@ html {
   	box-sizing: inherit;
 }
 
+button{
+  margin      : 0;
+  padding     : 0;
+  border-bottom: 2px solid black;
+  background  : transparent;
+  font-family : inherit;
+  font-size   : 1em;
+  cursor      : pointer;
+}
+
+button::-moz-focus-inner{
+  padding : 0;
+  border  : 0;
+}
+
+a {
+	text-decoration: none;
+}
+
 .super-container {
 	padding: 6.4rem 1.6rem 1.6rem 1.6rem;
 	margin: 0 auto;
@@ -107,7 +126,6 @@ nav #menu-toggle {
 nav .label-toggle {
 	display: none;
 }
-
 
 
 @media screen and (max-width: 600px) {
@@ -526,7 +544,7 @@ div a {
 	flex: 1 1 50%;
 	display: flex;
 	flex-flow: column nowrap;
-	align-items: flex-start;
+	align-self: flex-start;
 	justify-content: space-around;
     padding: 0.625rem;
     line-height: 2.8rem;
