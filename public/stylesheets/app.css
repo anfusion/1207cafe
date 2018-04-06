@@ -13,17 +13,22 @@ html {
 
 button{
   margin      : 0;
-  padding     : 0;
-  border-bottom: 2px solid black;
-  background  : transparent;
+  padding     : .25rem;
+  border: 1px solid gray;
+  background  : rgba(232, 69, 96, 0.55);
+;
   font-family : inherit;
-  font-size   : 1em;
+  font-size   : 1.6rem;
   cursor      : pointer;
 }
 
 button::-moz-focus-inner{
   padding : 0;
   border  : 0;
+}
+
+input, textarea {
+	font-size: inherit;
 }
 
 a {
