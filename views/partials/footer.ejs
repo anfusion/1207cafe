@@ -1,4 +1,51 @@
-			</div>
     	</div>
+    	
+
+
+<footer class="footer">
+	<div class="footer-image-center">
+		<img src="/images/cuplegsconnected.png" alt="1207 logo image" class="footer-image">
+	</div>
+	<div class="footer-info footer-left-info">
+		<ul class="footer-info-list">
+			<li class="footer-info-list-item"><a class="nodec" href="#">Email</a></li>
+			<li class="footer-info-list-item"><a class="nodec" href="#">Insta</a></li>
+			<li class="footer-info-list-item"><a class="nodec" href="#">Facebook</a></li>
+			<li class="footer-info-list-item"><a class="nodec" href="#">Youtube</a></li>
+		</ul>
+	</div>
+	<div class="footer-info footer-right-info">
+		<div class="footer-right-info-address">
+		  	<p>Address</p>
+		  	<p>広島市なになに区<br>123−2−23<br>1207号室</p>
+		</div>
+	  	<div id="map"></div>
+	</div>
+	<div class="footer-signoff">
+		<p class="signoff">Built by ANFUSION DESIGN</p>
+	</div>
+</footer>
+
+   <script> 
+      function initMap() {
+ 	    var lat = 34.3852;
+ 	    var lng = 132.4553;
+        var hiroshima = {lat: lat, lng: lng};
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 8,
+          center: hiroshima,
+        });
+        var marker = new google.maps.Marker({
+          position: hiroshima,
+          map: map
+        });
+      }
+    </script>
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyADYvh9oxcf_X8GG1-9XFZx1XV0tL25NEk&callback=initMap"></script>
+
+
+
+
     </body>
 </html>
